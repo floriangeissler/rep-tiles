@@ -1,8 +1,6 @@
 :root {
   --color-background: #f7f8fa;
-  --color-text: #222;
-  --color-text-subtle: #444;
-  --color-text-footer: #888;
+  --color-text: #666;
   --color-primary: #174ea6;
   --color-primary-hover: #2563eb;
   --color-white: #fff;
@@ -12,6 +10,7 @@
   --color-link-underline: #ccc;
 
   --border-radius: 18px;
+  --thumbnail-size-for-modelviewer: 50px;
 }
 
 body {
@@ -21,25 +20,17 @@ body {
   color: var(--color-text);
   min-height: 100vh;
   display: flex;
+  align-items: center;
   flex-direction: column;
 }
 
-h1 {
-  font-size: 2.6rem;
-  font-weight: 700;
-  text-align: center;
-  margin-top: 2.5vh;
-  margin-bottom: 1.5vh;
-  letter-spacing: 0.02em;
+code {
+  font-size: 0.9em;
 }
 
-p {
-  font-size: 1.15rem;
-  line-height: 1.7;
-  text-align: center;
-  color: var(--color-text-subtle);
-  margin: 0 auto 1.5em auto;
-  max-width: 650px;
+em {
+  font-size: 0.9em;
+  font-weight: 600;
 }
 
 a {
@@ -57,19 +48,18 @@ a:hover {
   background: #fffbe6;
   border: 1px solid #ffe58f;
   border-radius: 10px;
-  padding: 1.2em 1.5em;
-  margin: 2em 1em;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  font-size: 1.08rem;
-  color: #7c6f57;
-  max-width: 90vw;
+  padding: 0.8em;
+  margin: 1em;
+  font-size: 1.1rem;
+  max-width: 500px;
   text-align: center;
 }
 
 #load-script-btn {
   display: block;
-  margin: 2em auto;
-  padding: 0.9em 2.2em;
+  margin: 1em auto;
+  margin-bottom: 0.2em;
+  padding: 0.8em 1.2em;
   font-size: 1.15rem;
   font-weight: 600;
   color: var(--color-white);
@@ -81,49 +71,98 @@ a:hover {
   transition: background 0.2s, border 0.2s;
 }
 
-#load-script-btn:hover:not(:disabled) {
+#load-script-btn:hover {
   background: var(--color-primary-hover);
   border-color: var(--color-primary-hover);
 }
 
-#load-script-btn:disabled {
-  background: var(--color-disabled-bg);
-  color: var(--color-disabled-text);
-  border-color: var(--color-disabled-border);
-  cursor: not-allowed;
+#viewer-container {
+  display: grid;
+  place-items: center;
+  margin: 1em auto;
 }
 
-.model-container {
-  display: block;
-  margin: 2vh auto 0;
-  background: var(--color-white);
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+#viewer-container>* {
+  grid-area: 1 / 1;
 }
 
 #model-placeholder {
-  width: 50%;
+  display: block;
+  opacity: 1;
+  transition: opacity 1s ease;
+  width: 40vh;
+  max-width: 90vw;
 }
 
 model-viewer {
-  width: 90%;
-  flex-grow: 1;
-  max-height: 75vh;
-  display: block;
-  margin: 0 auto;
+  height: 80vh;
+  width: 95vw;
+  max-width: 80vh;
+  background-color: var(--color-white);
+  border-radius: var(--border-radius);
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+#model-thumbnails {
+  display: flex;
+  gap: 1em;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+}
+
+.model-thumb {
+  width: 80px;
+  cursor: pointer;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.2s ease-in-out, width 0.3s ease-in-out;
+}
+
+.model-thumb.selected {
+  border-color: var(--color-primary);
+}
+
+.model-active .model-thumb {
+  width: var(--thumbnail-size-for-modelviewer);
+}
+
+.fullscreen-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+#fullscreen-btn {
+  height: var(--thumbnail-size-for-modelviewer);
+  padding: 0 1.5em;
+  font-size: 0.9em;
+  font-weight: 600;
+  color: var(--color-white);
+  background: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: 6px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+}
+
+#desktop-controls-info,
+#mobile-controls-info {
+  font-size: 0.8em;
+  color: var(--color-text);
 }
 
 footer {
   max-width: 90vw;
   text-align: center;
-  color: var(--color-text-footer);
-  margin: auto;
+  margin: 0.1em auto 0;
+  padding: 0.1em 0 max(1em, env(safe-area-inset-bottom));
   margin-top: auto;
-  padding-top: 0.5em;
-  padding-bottom: 0;
 }
 
 footer p {
   font-size: 0.75em;
-  margin-bottom: 0.5em;
 }
