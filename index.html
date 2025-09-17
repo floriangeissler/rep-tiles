@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Rep-Tile 3D Model</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An interactive 3D model of a Rep-Tile, viewable in your browser.">
+
+  <meta property="og:title" content="Rep-Tile 3D Model">
+  <meta property="og:description" content="An interactive 3D model of a Rep-Tile, viewable in your browser.">
+  <meta property="og:image" content="https://floriangeissler.github.io/rep-tiles/rep-tile_1.webp">
+  <meta property="og:url" content="https://floriangeissler.github.io/rep-tiles/">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div id="consent-container">
+    <div class="consent">
+      This site uses Google's <code>&lt;model&#8209;viewer&gt;</code> to display the 3D model. Click "Enable Interactive
+      3D Viewer" to load the required script from <code>ajax.googleapis.com</code>, which may share technical data (such
+      as IP addresses) with Google.
+    </div>
+    <button id="load-script-btn">
+      Enable Interactive 3D Viewer
+    </button>
+  </div>
+
+  <div id="model-thumbnails" style="display: flex; gap: 1em; justify-content: center; margin-bottom: 1em;">
+    <img id="thumb-single" class="model-thumb selected" src="./models/rep-tile_1.png"
+      alt="Single Cube Preview" style="width: 120px; cursor: pointer; border: 2px solid #0078d7; border-radius: 8px;">
+    <img id="thumb-assembled" class="model-thumb" src="./models/rep-tile_1_cube.png"
+      alt="Assembled Preview" style="width: 120px; cursor: pointer; border: 2px solid #ccc; border-radius: 8px;">
+  </div>
+
+  <img id="model-placeholder" class="model-container" src="./models/rep-tile_1.png"
+    alt="A static preview image of the 3D rep-tile model.">
+
+
+  <div style="text-align: center; margin: 1em 0;">
+    <button id="fullscreen-btn" style="padding: 0.5em 1.2em; font-size: 1em; display: none;">Fullscreen Mode (press
+      [ESC] to exit)</button>
+  </div>
+
+  <model-viewer id="main-model-viewer" src="./models/rep-tile_1.glb" ar
+    ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral"
+    poster="./models/rep-tile_1.png" shadow-intensity="0.28"
+    camera-orbit="-675deg 130deg 50m" field-of-view="30deg" style="display: none;"></model-viewer>
+      <!-- <model-viewer src="8cubes4.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1" camera-orbit="-315.8deg 123.1deg 15.33m" field-of-view="35.58deg"> -->
+
+  <script>
+    const placeholder = document.getElementById('model-placeholder');
+    const modelViewer = document.getElementById('main-model-viewer');
+    const thumbSingle = document.getElementById('thumb-single');
+    const thumbAssembled = document.getElementById('thumb-assembled');
+
+    function selectModel(type) {
+      if (type === 'single') {
+        placeholder.src = './models/rep-tile_1.png';
+        thumbSingle.classList.add('selected');
+        thumbSingle.style.borderColor = '#0078d7';
+        thumbAssembled.classList.remove('selected');
+        thumbAssembled.style.borderColor = '#ccc';
+        if (modelViewer) {
+          modelViewer.src = './models/rep-tile_1.glb';
+          modelViewer.poster = './models/rep-tile_1.png';
+        }
+      } else {
+        placeholder.src = './models/rep-tile_1_cube.png';
+        thumbSingle.classList.remove('selected');
+        thumbSingle.style.borderColor = '#ccc';
+        thumbAssembled.classList.add('selected');
+        thumbAssembled.style.borderColor = '#0078d7';
+        if (modelViewer) {
+          modelViewer.src = './models/rep-tile_1_cube.glb';
+          modelViewer.poster = './models/rep-tile_1_cube.png';
+        }
+      }
+    }
+
+    thumbSingle.addEventListener('click', function () {
+      selectModel('single');
+    });
+    thumbAssembled.addEventListener('click', function () {
+      selectModel('assembled');
+    });
+
+    document.getElementById('load-script-btn').addEventListener('click', function () {
+      const consentContainer = document.getElementById('consent-container');
+      consentContainer.style.display = 'none';
+
+      var script = document.createElement('script');
+      script.type = 'module';
+      script.src = 'https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js';
+      script.onload = function () {
+        placeholder.style.display = 'none';
+        modelViewer.style.display = 'block';
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        function isMobileDevice() {
+          return /iPhone|iPad|iPod|Android|webOS|BlackBerry|Windows Phone/i.test(navigator.userAgent);
+        }
+        if (!isMobileDevice()) {
+          fullscreenBtn.style.display = 'inline-block';
+          fullscreenBtn.addEventListener('click', function () {
+            if (modelViewer.requestFullscreen) {
+              modelViewer.requestFullscreen();
+            } else if (modelViewer.webkitRequestFullscreen) {
+              modelViewer.webkitRequestFullscreen();
+            } else if (modelViewer.msRequestFullscreen) {
+              modelViewer.msRequestFullscreen();
+            }
+          });
+          document.addEventListener('fullscreenchange', function () {
+            if (!document.fullscreenElement) {
+            }
+          });
+        } else {
+          fullscreenBtn.style.display = 'none';
+        }
+      };
+      document.body.appendChild(script);
+    });
+  </script>
+  <footer>
+    <p>Interactive <a href="https://github.com/floriangeissler/rep-tiles">3D Model</a> of a <a
+        href="https://arxiv.org/abs/2412.19986" target="_blank" rel="noopener">Rep&#8209;Tile</a> via <a
+        href="https://modelviewer.dev/" target="_blank" rel="noopener">&lt;model&#8209;viewer&gt;</a>. <br>
+      &copy;&nbsp;2025 <a href="https://floriangeissler.github.io" target="_blank" rel="noopener">Florian Geissler</a>
+    </p>
+  </footer>
+</body>
+
+</html>
