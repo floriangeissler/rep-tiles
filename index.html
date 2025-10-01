@@ -6,23 +6,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="An interactive 3D model of a Rep-Tile, viewable in your browser.">
+  <meta name="keywords" content="3d rep-tile, 3d model">
+  <meta name="author" content="Florian Geissler">
 
   <meta property="og:title" content="Rep-Tile 3D Model">
   <meta property="og:description" content="An interactive 3D model of a Rep-Tile, viewable in your browser.">
   <meta property="og:image" content="https://floriangeissler.github.io/rep-tiles/models/rep-tile_1_cube.png">
   <meta property="og:url" content="https://floriangeissler.github.io/rep-tiles/">
 
-  <link rel="stylesheet" href="./styles.css?v=2">
+  <link rel="stylesheet" href="./styles.css?v=3">
 </head>
 
 <body>
   <div id="consent-container">
-    <div class="consent">
+    <div class="consent" id="consent-text">
       This site uses Google's &lt;model&#8209;viewer&gt; component to display the 3D model. Selecting 
       <em>Enable Interactive 3D Viewer</em> loads the necessary third-party resources from 
       ajax.googleapis.com and shares technical data (such as IP addresses) with Google.
     </div>
-    <button id="load-script-btn">
+    <button id="load-script-btn" aria-describedby="consent-text">
       Enable Interactive 3D Viewer
     </button>
   </div>
@@ -38,7 +40,7 @@
     <img id="thumb-single" class="model-thumb" src="./models/rep-tile_1.png" alt="Single Rep-Tile Preview" />
     <img id="thumb-cube" class="model-thumb" src="./models/rep-tile_1_cube.png" alt="Rep-Tile Cube Preview" />
     <div class="fullscreen-container">
-      <button id="fullscreen-btn">Fullscreen</button>
+      <button id="fullscreen-btn" aria-label="Enter fullscreen mode">Fullscreen</button>
       <div id="desktop-controls-info" style="display: none;">
         <b>Drag</b> to rotate, <b>Shift + Drag</b> to move, <b>Scroll</b> to zoom.
       </div>
@@ -48,7 +50,7 @@
     </div>
   </div>
 
-  <script src="./scripts.js?v=2"></script>
+  <script src="./scripts.js?v=3"></script>
 
   <footer>
     <p>Interactive <a href="https://github.com/floriangeissler/rep-tiles">3D Model</a>
