@@ -1,6 +1,6 @@
-# Rep-Tiles 
+# 3D Rep-Tile Models
 
-This project provides illustrations of a **3-dimensional Rep-Tile** constructed by a procedure described in the [2024 paper by Ryan Blair, Patricia Cahn, Alexandra Kjuchukova, Hannah Schwartz](https://arxiv.org/abs/2412.19986).
+This project provides illustrations of a **3-dimensional Rep-Tile** constructed by a procedure described in the 2024 paper [*Rep-Tiles*](https://arxiv.org/abs/2412.19986) by Ryan Blair, Patricia Cahn, Alexandra Kjuchukova, Hannah Schwartz.
 
 ## Interactive 3D Model
 
@@ -16,5 +16,4 @@ An interactive 3D model of a rep-tile is available to view in your browser. The 
 
 ## License
 
-This code is licensed under the MIT License. See the LICENSE file for details.
-
+This code is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

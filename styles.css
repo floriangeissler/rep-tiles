@@ -4,10 +4,12 @@
   --color-primary: #174ea6;
   --color-primary-hover: #2563eb;
   --color-white: #fff;
-  --color-disabled-bg: #bdbdbd;
-  --color-disabled-text: #eee;
-  --color-disabled-border: #aaa;
-  --color-link-underline: #ccc;
+  --color-grey-light: #ccc;
+  --color-grey-medium: #aaa;
+  --color-grey-dark: #666;
+  --color-consent-bg: #fffbe6;
+  --color-consent-border: #ffe58f;
+  --color-shadow: rgba(23, 78, 166, 0.10);
 
   --border-radius: 18px;
   --thumbnail-size-for-modelviewer: 50px;
@@ -17,7 +19,7 @@ body {
   margin: 0;
   font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background: var(--color-background);
-  color: var(--color-text);
+  color: var(--color-grey-dark);
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -36,7 +38,7 @@ em {
 a {
   color: inherit;
   text-decoration: underline;
-  text-decoration-color: var(--color-link-underline);
+  text-decoration-color: var(--color-grey-light);
   transition: text-decoration-color 0.2s;
 }
 
@@ -45,8 +47,8 @@ a:hover {
 }
 
 .consent {
-  background: #fffbe6;
-  border: 1px solid #ffe58f;
+  background: var(--color-consent-bg);
+  border: 1px solid var(--color-consent-border);
   border-radius: 10px;
   padding: 0.8em;
   margin: 1em;
@@ -66,7 +68,7 @@ a:hover {
   background: var(--color-primary);
   border: 1px solid var(--color-primary);
   border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(23, 78, 166, 0.10);
+  box-shadow: 0 2px 8px var(--color-shadow);
   cursor: pointer;
   transition: background 0.2s, border 0.2s;
 }
@@ -76,10 +78,19 @@ a:hover {
   border-color: var(--color-primary-hover);
 }
 
+#load-script-btn:focus,
+.model-thumb:focus,
+#fullscreen-btn:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 #viewer-container {
   display: grid;
   place-items: center;
   margin: 1em auto;
+  /* Prevent scrolling while allowing model viewer touch interactions */
+  touch-action: pan-x pan-y pinch-zoom;
 }
 
 #viewer-container>* {
@@ -102,6 +113,8 @@ model-viewer {
   border-radius: var(--border-radius);
   opacity: 0;
   transition: opacity 1s ease;
+  /* Ensure model-viewer handles its own touch events */
+  touch-action: manipulation;
 }
 
 #model-thumbnails {
@@ -115,7 +128,7 @@ model-viewer {
 .model-thumb {
   width: 80px;
   cursor: pointer;
-  border: 2px solid #ccc;
+  border: 2px solid var(--color-grey-light);
   border-radius: 8px;
   transition: border-color 0.2s ease-in-out, width 0.3s ease-in-out;
 }
@@ -147,12 +160,28 @@ model-viewer {
   cursor: pointer;
   display: none;
   align-items: center;
+  transition: background 0.2s, border 0.2s;
+}
+
+#fullscreen-btn:hover {
+  background: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+/* Loading states */
+.loading {
+  cursor: wait;
+}
+
+.loading .model-thumb {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 #desktop-controls-info,
 #mobile-controls-info {
   font-size: 0.8em;
-  color: var(--color-text);
+  color: var(--color-grey-dark);
 }
 
 footer {
